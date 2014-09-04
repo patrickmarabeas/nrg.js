@@ -1,0 +1,26 @@
+{
+  "name": "ngComponent",
+  "version": "1.0.0",
+  "description": "Module for interfacing React components with Angular applications",
+  "homepage": "https://github.com/patrickmarabeas/ng-Component.js",
+  "bugs": "https://github.com/patrickmarabeas/ng-Component.js/issues",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/patrickmarabeas/ng-Component.js.git"
+  },
+  "license": "MIT",
+  "main": "src/ng-Component.js",
+  "devDependencies": {
+    "gulp": "~3.8.0",
+    "gulp-watch": "~0.6.9",
+    "gulp-notify": "~1.5.0",
+    "gulp-sourcemaps": "~1.1.1",
+    "gulp-less": "~1.3.5",
+    "gulp-minify-css": "~0.3.7",
+    "gulp-react": "1.0.0",
+    "gulp-bower": "0.0.6"
+  },
+  "scripts": {
+    "postinstall": "gulp"
+  }
+}

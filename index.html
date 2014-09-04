@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html data-ng-app="demo">
+<head>
+
+  <title></title>
+
+  <link rel="stylesheet" type="text/css" href="demo/css/main.css"/>
+
+</head>
+<body>
+
+  <div ng-controller="EX1Controller">
+
+    <header>
+      <h1></h1>
+      <h2></h2>
+    </header>
+
+    <h1>REACT</h1>
+    <div id="content" data-component="fittext" data-setting="12" data-ng-model="demo.message" data-check="listen"></div>
+
+    <h1>ANGULAR</h1>
+    <input type="text" ng-model="demo.message" ng-change="handleChange()" />
+    <p><strong>scope.demo.message:</strong> {{demo.message}}</p>
+
+  </div>
+
+  <script type="text/javascript" src="lib/angular/angular.min.js"></script>
+  <script type="text/javascript" src="lib/react/react.js"></script>
+
+  <script type="text/javascript" src="src/ng-Component.js"></script>
+  <script type="text/javascript" src="demo/js/example1.js"></script>
+
+</body>
+</html>
