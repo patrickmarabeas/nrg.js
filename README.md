@@ -3,7 +3,7 @@
 ### Module for interfacing React components with Angular applications
 
 ### Install and Inclusion
-Grab it with Bower: `bower install ngComponent`
+Grab it with Bower:
 
 Include it in your AngularJS application:
 
