@@ -1,20 +1,20 @@
-/* ng-Component.js v1.0.0
- * https://github.com/patrickmarabeas/ng-Component.js
+/* nrg.js v1.0.0
+ * https://github.com/patrickmarabeas/nrg.js
  *
  * Copyright 2014, Patrick Marabeas http://marabeas.io
  * Released under the MIT license
  * http://opensource.org/licenses/mit-license.php
  *
- * Date: 03/09/2014
+ * Date: 08/09/2014
  */
 
 ;(function(window, document, angular, React, undefined) {
   'use strict';
 
-  angular.module('ngComponent', [])
+  angular.module('nrg', [])
 
     .value('config', {
-      'check': 'dirty'
+      'renderOn': 'watch'
     })
 
     .factory('ComponentFactory', [function() {
@@ -31,7 +31,6 @@
               attrs: attrs
             }), element[0]);
           }
-
         },
         unmount: function(element) {
           React.unmountComponentAtNode(element[0]);
@@ -39,34 +38,40 @@
       }
     }])
 
-    .directive('component', ['$timeout', 'config', 'ComponentFactory', function($timeout, config, ComponentFactory) {
+    .directive('component', ['$controller', '$timeout', 'config', 'ComponentFactory', function($controller, $timeout, config, ComponentFactory) {
       return {
         restrict: 'EA',
+        controller: function($scope, $element, $attrs){
+          return ($attrs.ctrl)
+            ? $controller($attrs.ctrl, {$scope:$scope, $element:$element, $attrs:$attrs})
+            : null;
+        },
         scope: {
           ngModel: '='
         },
         link: function(scope, element, attrs) {
-          config.check = attrs.check || config.check;
+          config.renderOn = attrs.check || config.renderOn;
           config.namespace = attrs.namespace || undefined;
-          config.attributes = {};
+          var attributes = {};
           angular.forEach(element[0].attributes, function(a) {
-            config.attributes[a.name] = a.value;
+            attributes[a.name.replace('data-','')] = a.value;
           });
 
-          ComponentFactory.render(config.namespace, attrs.component, element, scope, config.attributes);
+          ComponentFactory.render(config.namespace, attrs.component, element, scope, attributes);
 
-          switch(config.check) {
-            case 'dirty':
+          switch(config.renderOn) {
+            case 'watch':
               scope.$watch('ngModel', function() {
-                ComponentFactory.render(config.namespace, attrs.component, element, scope, config.attributes);
-              });
+                ComponentFactory.render(config.namespace, attrs.component, element, scope, attributes);
+              }, true);
               break;
 
             case 'listen':
+              /* requires the element to have an ID set */
               scope.$on('render-' + attrs.id, function() {
-                /* timeout required because: ... */
+                /* timeout required to push the render to bottom of stack - after scope is updated */
                 $timeout(function() {
-                  ComponentFactory.render(config.namespace, attrs.component, element, scope, config.attributes);
+                  ComponentFactory.render(config.namespace, attrs.component, element, scope, attributes);
                 });
               });
               break;

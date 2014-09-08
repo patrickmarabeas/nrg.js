@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html data-ng-app="demo">
+<html data-ng-app="app">
 <head>
 
   <title></title>
@@ -9,27 +9,51 @@
 </head>
 <body>
 
-  <div ng-controller="EX1Controller">
+  <div data-ng-controller="MainController">
+    <h1>Example 1</h1>
 
-    <header>
-      <h1></h1>
-      <h2></h2>
-    </header>
+    <h2>REACT</h2>
+    <div data-component="ex1" data-ng-model="text" data-ctrl="InjectedController"></div>
 
-    <h1>REACT</h1>
-    <div id="content" data-component="fittext" data-setting="12" data-ng-model="demo.message" data-check="listen"></div>
+    <h2>ANGULAR</h2>
+    <input type="text" data-ng-model="text" data-ng-change="handleChange()" />
+    <p>{{text}}</p>
 
-    <h1>ANGULAR</h1>
-    <input type="text" ng-model="demo.message" ng-change="handleChange()" />
-    <p><strong>scope.demo.message:</strong> {{demo.message}}</p>
 
   </div>
+
+  <hr>
+
+  <div data-ng-controller="NumberController">
+    <h1>Example 2</h1>
+    <p>Uncomment one of the blocks of code</p>
+
+    <button ng-click="numGen()">Refresh Data</button>
+
+    <hr>
+
+
+    <!-- REACT -->
+    <!--<div data-component="ex2" data-ng-model="numbers"></div>-->
+
+
+    <!-- ANGULAR -->
+    <!--<table>-->
+      <!--<tr ng-repeat="number in numbers">-->
+        <!--<td>{{number}}</td>-->
+      <!--</tr>-->
+    <!--</table>-->
+
+  </div>
+
 
   <script type="text/javascript" src="lib/angular/angular.min.js"></script>
   <script type="text/javascript" src="lib/react/react.js"></script>
 
-  <script type="text/javascript" src="src/ng-Component.js"></script>
+  <script type="text/javascript" src="demo/js/app.js"></script>
+  <script type="text/javascript" src="src/nrg.js"></script>
   <script type="text/javascript" src="demo/js/example1.js"></script>
+  <script type="text/javascript" src="demo/js/example2.js"></script>
 
 </body>
 </html>

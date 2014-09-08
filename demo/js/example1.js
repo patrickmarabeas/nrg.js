@@ -4,37 +4,43 @@
   'use strict';
 
   /* ANGULAR.JS */
-  angular.module('demo', ['ngComponent'])
-    .controller('EX1Controller', [ '$rootScope', '$scope', function($rootScope, $scope) {
-      $scope.demo = {};
-      $scope.demo.message = 'This is set in Angular';
+  angular.module('app')
 
-      $scope.handleChange = function() {
-        $rootScope.$broadcast('render-content');
-      };
+    .controller('MainController', [ '$rootScope', '$scope', function($rootScope, $scope) {
+
+      $scope.text = 'This is set in Angular';
+
+      $scope.destroy = function() {
+        $scope.$destroy();
+        alert('Scope has been destroyed (which we listen for and unmount the react component). This was called from within the React component');
+      }
     }]);
 
   /* REACT.JS */
-  window.fittext = React.createClass({displayName: 'fittext',
-    handleChange: function(event) {
-      /* React */
-      this.forceUpdate();
+  window.ex1 = React.createClass({displayName: 'ex1',
 
-      /* Angular */
+    render: function(){
+      console.log(this.props.scope);
+      return (
+        React.DOM.div(null, 
+          React.DOM.input({type: "text", value: this.props.scope.ngModel, onChange: this.handleChange}), 
+          React.DOM.button({onClick: this.deleteScope}, "Destroy Scope"), 
+          React.DOM.p(null, this.props.scope.ngModel)
+        )
+        )
+    },
+
+    handleChange: function(event) {
       var _this = this;
       this.props.scope.$apply(function() {
         _this.props.scope.ngModel = event.target.value;
       });
     },
 
-    render: function(){
-      return (
-        React.DOM.div(null, 
-          React.DOM.p(null, React.DOM.strong(null, "this.props.scope.ngModel: "), this.props.scope.ngModel), 
-          React.DOM.input({type: "text", value: this.props.scope.ngModel, onChange: this.handleChange})
-        )
-      )
+    deleteScope: function(event) {
+      this.props.scope.$parent.destroy();
     }
+
   });
 
 })(window, document, angular, React);

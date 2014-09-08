@@ -1,15 +1,15 @@
 {
-  "name": "ngComponent",
+  "name": "nrg.js",
   "version": "1.0.0",
   "description": "Module for interfacing React components with Angular applications",
-  "homepage": "https://github.com/patrickmarabeas/ng-Component.js",
-  "bugs": "https://github.com/patrickmarabeas/ng-Component.js/issues",
+  "homepage": "https://github.com/patrickmarabeas/nrg.js",
+  "bugs": "https://github.com/patrickmarabeas/nrg.js/issues",
   "repository": {
     "type": "git",
-    "url": "git://github.com/patrickmarabeas/ng-Component.js.git"
+    "url": "git://github.com/patrickmarabeas/nrg.js.git"
   },
   "license": "MIT",
-  "main": "src/ng-Component.js",
+  "main": "src/nrg.js",
   "devDependencies": {
     "gulp": "~3.8.0",
     "gulp-watch": "~0.6.9",

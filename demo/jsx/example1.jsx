@@ -4,37 +4,43 @@
   'use strict';
 
   /* ANGULAR.JS */
-  angular.module('demo', ['ngComponent'])
-    .controller('EX1Controller', [ '$rootScope', '$scope', function($rootScope, $scope) {
-      $scope.demo = {};
-      $scope.demo.message = 'This is set in Angular';
+  angular.module('app')
 
-      $scope.handleChange = function() {
-        $rootScope.$broadcast('render-content');
-      };
+    .controller('MainController', [ '$rootScope', '$scope', function($rootScope, $scope) {
+
+      $scope.text = 'This is set in Angular';
+
+      $scope.destroy = function() {
+        $scope.$destroy();
+        alert('Scope has been destroyed (which we listen for and unmount the react component). This was called from within the React component');
+      }
     }]);
 
   /* REACT.JS */
-  window.fittext = React.createClass({
-    handleChange: function(event) {
-      /* React */
-      this.forceUpdate();
+  window.ex1 = React.createClass({
 
-      /* Angular */
+    render: function(){
+      console.log(this.props.scope);
+      return (
+        <div>
+          <input type='text' value={this.props.scope.ngModel} onChange={this.handleChange} />
+          <button onClick={this.deleteScope}>Destroy Scope</button>
+          <p>{this.props.scope.ngModel}</p>
+        </div>
+        )
+    },
+
+    handleChange: function(event) {
       var _this = this;
       this.props.scope.$apply(function() {
         _this.props.scope.ngModel = event.target.value;
       });
     },
 
-    render: function(){
-      return (
-        <div>
-          <p><strong>this.props.scope.ngModel: </strong>{this.props.scope.ngModel}</p>
-          <input type='text' value={this.props.scope.ngModel} onChange={this.handleChange} />
-        </div>
-      )
+    deleteScope: function(event) {
+      this.props.scope.$parent.destroy();
     }
+
   });
 
 })(window, document, angular, React);

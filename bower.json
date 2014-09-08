@@ -1,8 +1,8 @@
 {
-  "name": "ngComponent",
+  "name": "nrg.js",
   "version": "1.0.0",
   "main": [
-    "src/ng-Component.js"
+    "src/nrg.js"
   ],
   "keywords": [
     "react",
